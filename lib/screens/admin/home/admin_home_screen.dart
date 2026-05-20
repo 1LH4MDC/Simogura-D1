@@ -3,7 +3,7 @@ import '../../../controllers/kolam_controller.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/models/kolam_model.dart';
 import 'tambah_kolam_screen.dart';
-import 'admin_dashboard_screen.dart';
+import '../../../navigation/admin_bottom_nav.dart';
 
 // ─────────────────────────────────────────────────────────────
 //  WARNA
@@ -64,16 +64,16 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   // ── Buka dashboard kolam yang dipilih ─────────────
   void _bukaKolam(KolamModel kolam) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => AdminDashboardScreen(
-          user:  widget.user,
-          kolam: kolam,
-        ),
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => AdminBottomNav(
+        user:  widget.user,
+        kolam: kolam,
       ),
-    );
-  }
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -286,15 +286,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
-                    color: kolam.isAktif
+                    color: kolam.status
                         ? Colors.green.withValues(alpha: 0.12)
                         : Colors.grey.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    kolam.isAktif ? 'Aktif' : 'Selesai',
+                    kolam.status ? 'Aktif' : 'Selesai',
                     style: TextStyle(
-                      color: kolam.isAktif ? Colors.green : _C.subtext,
+                      color: kolam.status ? Colors.green : _C.subtext,
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                     ),

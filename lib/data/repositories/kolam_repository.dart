@@ -16,9 +16,7 @@ class KolamRepository {
         .eq('created_by', userId)
         .order('created_at', ascending: false);
 
-    return (response as List)
-        .map((e) => KolamModel.fromMap(e))
-        .toList();
+    return (response as List).map((e) => KolamModel.fromMap(e)).toList();
   }
 
   // ── Fetch satu kolam berdasarkan id ────────────────
@@ -46,14 +44,14 @@ class KolamRepository {
     final response = await _db
         .from('kolam')
         .insert({
-          'nama':          nama,
-          'alamat':        alamat,
-          'total_ikan':    totalIkan,
+          'nama': nama,
+          'alamat': alamat,
+          'total_ikan': totalIkan,
           'tanggal_mulai': tanggalMulai.toIso8601String(),
-          'target_bobot':  targetBobot,
+          'target_bobot': targetBobot,
           'durasi_target': durasiTarget,
-          'is_aktif':      true,
-          'created_by':    userId,
+          'status': true,
+          'created_by': userId,
         })
         .select()
         .single();
@@ -70,13 +68,16 @@ class KolamRepository {
     required double targetBobot,
     required int durasiTarget,
   }) async {
-    await _db.from('kolam').update({
-      'nama':          nama,
-      'alamat':        alamat,
-      'total_ikan':    totalIkan,
-      'target_bobot':  targetBobot,
-      'durasi_target': durasiTarget,
-    }).eq('id', id);
+    await _db
+        .from('kolam')
+        .update({
+          'nama': nama,
+          'alamat': alamat,
+          'total_ikan': totalIkan,
+          'target_bobot': targetBobot,
+          'durasi_target': durasiTarget,
+        })
+        .eq('id', id);
   }
 
   // ── Selesaikan kolam (is_aktif = false) ───────────

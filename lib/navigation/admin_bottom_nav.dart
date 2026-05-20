@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:simogura/screens/admin/home/admin_home_screen.dart';
 import '../core/constants/app_colors.dart';
 import '../core/constants/app_strings.dart';
 import '../screens/admin/home/admin_dashboard_screen.dart';
 import '../screens/admin/monitoring/admin_monitoring_screen.dart';
 import '../screens/admin/profile/admin_profile_screen.dart';
 import '../data/models/user_model.dart';
-import 'user_bottom_nav.dart'; // ✅ Bisa pakai UserBottomNav untuk admin juga, tinggal ganti halaman saja
+import '../data/models/kolam_model.dart';
 
-
+// ─────────────────────────────────────────────────────────────
+//  ADMIN BOTTOM NAV
+//  Muncul SETELAH kolam dipilih dari AdminHomeScreen.
+//  AdminHomeScreen sendiri TIDAK menggunakan widget ini.
+// ─────────────────────────────────────────────────────────────
 class AdminBottomNav extends StatefulWidget {
-  final UserModel user;
-  const AdminBottomNav({super.key, required this.user});
+  final UserModel  user;
+  final KolamModel kolam; // ← kolam yang dipilih dari AdminHomeScreen
+
+  const AdminBottomNav({
+    super.key,
+    required this.user,
+    required this.kolam,
+  });
 
   @override
   State<AdminBottomNav> createState() => _AdminBottomNavState();
@@ -26,8 +35,18 @@ class _AdminBottomNavState extends State<AdminBottomNav> {
   void initState() {
     super.initState();
     _pages = [
-      AdminHomeScreen(user: widget.user),
-      const AdminMonitoringScreen(),
+      // Tab 0 – Dashboard kolam yang dipilih
+      AdminDashboardScreen(
+        user:  widget.user,
+        kolam: widget.kolam,
+      ),
+
+      // Tab 1 – Monitoring sensor kolam yang dipilih
+      AdminMonitoringScreen(
+        
+      ),
+
+      // Tab 2 – Profil admin
       AdminProfileScreen(user: widget.user),
     ];
   }
@@ -69,19 +88,19 @@ class _AdminBottomNavState extends State<AdminBottomNav> {
         unselectedLabelStyle: const TextStyle(fontSize: 11),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon:       Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
-            label: AppStrings.navHome,
+            label:      AppStrings.navHome,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view_outlined),
+            icon:       Icon(Icons.grid_view_outlined),
             activeIcon: Icon(Icons.grid_view),
-            label: AppStrings.navMonitoring,
+            label:      AppStrings.navMonitoring,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon:       Icon(Icons.person_outline),
             activeIcon: Icon(Icons.person),
-            label: AppStrings.navProfile,
+            label:      AppStrings.navProfile,
           ),
         ],
       ),

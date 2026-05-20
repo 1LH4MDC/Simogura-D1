@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simogura/screens/admin/home/admin_home_screen.dart';
 import '../../controllers/auth_controller.dart';
 import '../../navigation/admin_bottom_nav.dart';
 import '../../navigation/user_bottom_nav.dart';
@@ -63,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: (_) => user.isAdmin
-              ? AdminBottomNav(user: user)   // → Admin
+              ? AdminHomeScreen(user: user)   // → Admin
               : UserBottomNav(user: user),   // → Petugas
         ),
         (route) => false, // hapus semua history (onboarding, login)
