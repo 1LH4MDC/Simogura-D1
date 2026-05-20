@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "graphql-language-service-server": "^2.14.8"
+  }
+}
