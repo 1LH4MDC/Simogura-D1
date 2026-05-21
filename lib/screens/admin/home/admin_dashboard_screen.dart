@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:simogura/screens/admin/home/detail_kolam_screen.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/models/kolam_model.dart';
-import '../../../data/models/sensor_data.dart';
+import '../../../data/models/sensor_model.dart';
 
 // ─────────────────────────────────────────────────────────────
 //  WARNA
@@ -311,13 +312,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             height: 38,
             child: OutlinedButton(
               onPressed: () {
-                // TODO: navigasi ke DetailKolamScreen
-                // Navigator.push(context, MaterialPageRoute(
-                //   builder: (_) => DetailKolamScreen(
-                //     user: widget.user,
-                //     kolam: widget.kolam,
-                //   ),
-                // ));
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (_) => DetailKolamScreen(
+                    user: widget.user,
+                    kolam: widget.kolam,
+                  ),
+                ));
               },
               style: OutlinedButton.styleFrom(
                 foregroundColor: _C.white,

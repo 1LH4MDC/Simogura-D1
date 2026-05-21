@@ -42,9 +42,7 @@ class _AdminBottomNavState extends State<AdminBottomNav> {
       ),
 
       // Tab 1 – Monitoring sensor kolam yang dipilih
-      AdminMonitoringScreen(
-        
-      ),
+      AdminMonitoringScreen(user: widget.user, kolam: widget.kolam),
 
       // Tab 2 – Profil admin
       AdminProfileScreen(user: widget.user),
