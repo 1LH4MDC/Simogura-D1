@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:simogura/screens/admin/home/admin_home_screen.dart';
+import 'package:simogura/screens/user/home/user_home_screen.dart'; // ✅ Import halaman home untuk user
 import '../../controllers/auth_controller.dart';
-import '../../navigation/admin_bottom_nav.dart';
-import '../../navigation/user_bottom_nav.dart';
 
 // ─────────────────────────────────────────────────────────────
 //  WARNA
 // ─────────────────────────────────────────────────────────────
 class _C {
-  static const navy  = Color(0xFF0C344D);
+  static const navy = Color(0xFF0C344D);
   static const white = Color(0xFFFFFFFF);
-  static const grey  = Color(0xFF9E9E9E);
-  static const line  = Color(0xFFE0E0E0);
-  static const text  = Color(0xFF333333);
-  static const hint  = Color(0xFFAAAAAA);
+  static const grey = Color(0xFF9E9E9E);
+  static const line = Color(0xFFE0E0E0);
+  static const text = Color(0xFF333333);
+  static const hint = Color(0xFFAAAAAA);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -27,13 +26,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _usernameCtrl    = TextEditingController();
-  final _passwordCtrl    = TextEditingController();
-  final _authController  = AuthController(); // ✅ renamed dari AkunController
+  final _usernameCtrl = TextEditingController();
+  final _passwordCtrl = TextEditingController();
+  final _authController = AuthController(); // ✅ renamed dari AkunController
 
-  bool _rememberMe  = true;
+  bool _rememberMe = true;
   bool _obscurePass = true;
-  bool _isLoading   = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -64,8 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         MaterialPageRoute(
           builder: (_) => user.isAdmin
-              ? AdminHomeScreen(user: user)   // → Admin
-              : UserBottomNav(user: user),   // → Petugas
+              ? AdminHomeScreen(user: user) // → Admin
+              : UserHomeScreen(user: user), // ✅ Ubah ke UserHomeScreen untuk Petugas
         ),
         (route) => false, // hapus semua history (onboarding, login)
       );
@@ -231,7 +230,8 @@ class _LoginScreenState extends State<LoginScreen> {
             onChanged: (v) => setState(() => _rememberMe = v ?? false),
             activeColor: _C.navy,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4)),
+              borderRadius: BorderRadius.circular(4),
+            ),
             side: const BorderSide(color: _C.navy),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
@@ -256,7 +256,8 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: _C.navy,
           foregroundColor: _C.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14)),
+            borderRadius: BorderRadius.circular(14),
+          ),
           elevation: 0,
         ),
         child: _isLoading
@@ -270,10 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
               )
             : const Text(
                 'Login',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
       ),
     );

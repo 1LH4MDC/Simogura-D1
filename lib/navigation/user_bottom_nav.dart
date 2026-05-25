@@ -5,10 +5,22 @@ import '../screens/user/home/user_home_screen.dart';
 import '../screens/user/monitoring/user_monitoring_screen.dart';
 import '../screens/user/profile/user_profile_screen.dart';
 import '../data/models/user_model.dart';
+import '../data/models/kolam_model.dart';
 
+// ─────────────────────────────────────────────────────────────
+//  USER BOTTOM NAV
+//  Muncul SETELAH kolam dipilih dari UserHomeScreen.
+//  UserHomeScreen sendiri TIDAK menggunakan widget ini.
+// ─────────────────────────────────────────────────────────────
 class UserBottomNav extends StatefulWidget {
-  final UserModel user;
-  const UserBottomNav({super.key, required this.user});
+  final UserModel  user;
+  final KolamModel kolam; // ← kolam yang dipilih dari UserHomeScreen
+
+  const UserBottomNav({
+    super.key,
+    required this.user,
+    required this.kolam,
+  });
 
   @override
   State<UserBottomNav> createState() => _UserBottomNavState();
@@ -23,8 +35,19 @@ class _UserBottomNavState extends State<UserBottomNav> {
   void initState() {
     super.initState();
     _pages = [
-      UserHomeScreen(user: widget.user),
-      const UserMonitoringScreen(),
+      // Tab 0 – Dashboard kolam yang dipilih (readonly)
+      UserHomeScreen(
+        user:  widget.user,
+        kolam: widget.kolam,
+      ),
+
+      // Tab 1 – Monitoring sensor kolam yang dipilih
+      UserMonitoringScreen(
+        user:  widget.user,
+        kolam: widget.kolam,
+      ),
+
+      // Tab 2 – Profil user (lihat saja)
       UserProfileScreen(user: widget.user),
     ];
   }
@@ -66,19 +89,19 @@ class _UserBottomNavState extends State<UserBottomNav> {
         unselectedLabelStyle: const TextStyle(fontSize: 11),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon:       Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
-            label: AppStrings.navHome,
+            label:      AppStrings.navHome,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view_outlined),
+            icon:       Icon(Icons.grid_view_outlined),
             activeIcon: Icon(Icons.grid_view),
-            label: AppStrings.navMonitoring,
+            label:      AppStrings.navMonitoring,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+            icon:       Icon(Icons.person_outline),
             activeIcon: Icon(Icons.person),
-            label: AppStrings.navProfile,
+            label:      AppStrings.navProfile,
           ),
         ],
       ),

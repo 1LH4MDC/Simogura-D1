@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simogura/screens/admin/home/detail_kolam_screen.dart';
+import 'package:simogura/screens/admin/notifikasi/admin_notifikasi_screen.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/models/kolam_model.dart';
 import '../../../data/models/sensor_model.dart';
@@ -93,7 +94,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.notifications_none, color: _C.white),
-                      onPressed: () {},
+                      onPressed: () {
+                        // ✅ Tambahkan navigasi ke sini
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AdminNotifikasiScreen(user: widget.user), 
+                          ),
+                        );
+                      },
                     ),
                     Positioned(
                       top: 8, right: 8,

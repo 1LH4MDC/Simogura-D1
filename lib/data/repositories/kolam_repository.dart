@@ -3,17 +3,16 @@ import '../models/kolam_model.dart';
 
 // ─────────────────────────────────────────────────────────────
 //  KOLAM REPOSITORY
-//  Semua akses tabel 'kolam' di Supabase ada di sini
 // ─────────────────────────────────────────────────────────────
 class KolamRepository {
   final _db = Supabase.instance.client;
 
-  // ── Fetch semua kolam milik user ───────────────────
-  Future<List<KolamModel>> getKolams(int userId) async {
+  // ── Fetch SEMUA kolam (tanpa filter userId) ────────────────
+  Future<List<KolamModel>> getKolams() async { // ✅ Hapus parameter userId
     final response = await _db
         .from('kolam')
         .select()
-        .eq('created_by', userId)
+        // ❌ Hapus baris .eq('created_by', userId) agar semua kolam terbaca
         .order('created_at', ascending: false);
 
     return (response as List).map((e) => KolamModel.fromMap(e)).toList();

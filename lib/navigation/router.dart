@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simogura/screens/admin/home/admin_home_screen.dart';
 import '../data/models/user_model.dart';
-import '../data/models/kolam_model.dart';
 import '../data/repositories/auth_repository.dart';
 import '../screens/onboarding/onboarding_screen.dart';
-import '../screens/auth/login_screen.dart';
-import '../navigation/admin_bottom_nav.dart';
-import '../navigation/user_bottom_nav.dart';
+import '../screens/admin/home/admin_home_screen.dart';
+import '../screens/user/home/user_home_screen.dart';
 
+// ─────────────────────────────────────────────────────────────
+//  APP ROUTER
+//  Cek session → arahkan ke halaman yang tepat
+//
+//  Alur:
+//  Admin : AppRouter → AdminHomeScreen → pilih kolam
+//                    → AdminBottomNav(user, kolam)
+//
+//  User  : AppRouter → UserHomeScreen  → pilih kolam
+//                    → UserBottomNav(user, kolam)
+// ─────────────────────────────────────────────────────────────
 class AppRouter extends StatelessWidget {
   const AppRouter({super.key});
-  
 
-  // Cek apakah user sudah pernah login (ada data tersimpan)
   Future<UserModel?> _getSavedUser() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs  = await SharedPreferences.getInstance();
     final userId = prefs.getInt('user_id');
-
     if (userId == null) return null;
-
-    // Ambil data user dari Supabase berdasarkan id yang tersimpan
     return await AuthRepository().fetchProfile(userId);
   }
 
@@ -30,7 +33,7 @@ class AppRouter extends StatelessWidget {
       future: _getSavedUser(),
       builder: (context, snapshot) {
 
-        // ── Loading ──────────────────────────────────
+        // ── Loading ────────────────────────────────────
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             backgroundColor: Color(0xFF0C344D),
@@ -42,18 +45,18 @@ class AppRouter extends StatelessWidget {
 
         final user = snapshot.data;
 
-        // ── Belum login → onboarding ─────────────────
+        // ── Belum login → onboarding ───────────────────
         if (user == null) {
           return const OnboardingScreen();
         }
 
-        // ── Admin → admin nav ─────────────────────────
+        // ── Admin → AdminHomeScreen (pilih kolam dulu) ─
         if (user.isAdmin) {
           return AdminHomeScreen(user: user);
         }
 
-        // ── User/Petugas → user nav ───────────────────
-        return UserBottomNav(user: user);
+        // ── User → UserHomeScreen (pilih kolam dulu) ───
+        return UserHomeScreen(user: user);
       },
     );
   }

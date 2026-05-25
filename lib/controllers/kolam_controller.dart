@@ -3,14 +3,13 @@ import '../data/repositories/kolam_repository.dart';
 
 // ─────────────────────────────────────────────────────────────
 //  KOLAM CONTROLLER
-//  Sudah disesuaikan dengan KolamModel baru (nama, alamat, dll)
 // ─────────────────────────────────────────────────────────────
 class KolamController {
   final _repo = KolamRepository();
 
-  // ── Fetch semua kolam milik user ───────────────────
-  Future<List<KolamModel>> getKolams(int userId) async {
-    return await _repo.getKolams(userId);
+  // ── Fetch semua kolam ──────────────────────────────────────
+  Future<List<KolamModel>> getKolams() async { // ✅ Hapus parameter userId
+    return await _repo.getKolams(); // ✅ Hapus argumen userId
   }
 
   // ── Fetch satu kolam ───────────────────────────────
@@ -18,7 +17,7 @@ class KolamController {
     return await _repo.getKolamById(id);
   }
 
-  // ── Tambah kolam baru (field lengkap sesuai desain) 
+  // ── Tambah kolam baru 
   Future<KolamModel> createKolam({
     required String nama,
     required String alamat,

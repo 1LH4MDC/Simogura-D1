@@ -42,7 +42,8 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   Future<void> _fetchKolams() async {
     setState(() => _isLoading = true);
     try {
-      final data = await _kolamController.getKolams(widget.user.id);
+      // ✅ Ganti menjadi ini:
+      final data = await _kolamController.getKolams();
       setState(() => _kolams = data);
     } catch (e) {
       debugPrint('FETCH_KOLAM_ERROR: $e');
