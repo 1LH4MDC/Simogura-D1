@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simogura/screens/user/notifikasi/user_notifikasi_screen.dart';
 import '../../../controllers/kolam_controller.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/models/kolam_model.dart';
@@ -195,7 +196,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         Icons.notifications_none,
                         color: _C.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        // ✅ Tambahkan navigasi ke UserNotifikasiScreen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserNotifikasiScreen(user: widget.user),
+                          ),
+                        );
+                      },
                     ),
                     Positioned(
                       top: 8, right: 8,
@@ -356,20 +365,31 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           ),
           Stack(
             children: [
-              Container(
-                width: 42, height: 42,
-                decoration: BoxDecoration(
-                  color: _C.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.06),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
+              // ✅ Bungkus dengan GestureDetector agar bisa diklik
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserNotifikasiScreen(user: widget.user),
                     ),
-                  ],
+                  );
+                },
+                child: Container(
+                  width: 42, height: 42,
+                  decoration: BoxDecoration(
+                    color: _C.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.06),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.notifications_none, color: _C.navy),
                 ),
-                child: const Icon(Icons.notifications_none, color: _C.navy),
               ),
               Positioned(
                 top: 8, right: 8,
